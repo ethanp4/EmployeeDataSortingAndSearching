@@ -18,7 +18,8 @@ void main() throws IOException {
         System.out.println();
     }
 
-    final var qSortEmployees = Utility.quickSort(unsortedEmployees);
+    final Comparator<Employee> byHourlyRate = Comparator.comparing(Employee::getHourlyRate);
+    final var qSortEmployees = Utility.quickSort(unsortedEmployees, byHourlyRate);
     System.out.println("Printing first 5 employees sorted by Utility.quickSort()");
     for (int i = 0; i < 5; i++) {
         var emp = qSortEmployees.get(i);

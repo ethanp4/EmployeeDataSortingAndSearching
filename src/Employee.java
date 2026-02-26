@@ -1,7 +1,7 @@
 import java.io.*;
 import java.util.ArrayList;
 
-public class Employee {
+public class Employee implements Comparable<Employee> {
     private int ID;
     private String name;
     private double hoursWorked;
@@ -62,6 +62,11 @@ public class Employee {
                 getID(), getName(), getHoursWorked(), getHourlyRate(), getDeductionProvince(), getDeductionFederal(), getEducationAllowance());
     }
 
+    @Override
+    public int compareTo(Employee other) {
+        return this.name.compareTo(other.getName());
+    }
+
     //getters and setters below here
     public double getHoursWorked() {
         return hoursWorked;
@@ -118,4 +123,6 @@ public class Employee {
     public void setEducationAllowance(double educationAllowance) {
         this.educationAllowance = educationAllowance;
     }
+
+
 }
