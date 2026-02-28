@@ -27,7 +27,7 @@ void main() throws IOException {
         System.out.println();
     }
 
-    final var selectionSortEmployees = Utility.selectionSort(unsortedEmployees);
+    final var selectionSortEmployees = Utility.selectionSort(unsortedEmployees, (e1, e2) -> Double.compare(e1.getHourlyRate(), e2.getHourlyRate()));
     System.out.println("Printing first 5 employees sorted by Utility.selectionSort()");
     for (int i = 0; i < 5; i++) {
         var emp = selectionSortEmployees.get(i);
