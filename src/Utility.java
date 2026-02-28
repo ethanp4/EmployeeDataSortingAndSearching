@@ -7,8 +7,60 @@ public class Utility {
 
     //compare using a custom comparator
     public static <T> ArrayList<T> quickSort(ArrayList<T> input, Comparator<T> comparator) {
-
+        if (input == null || input.size() <= 1) return input;
+        quickSort(input, 0, input.size() - 1, comparator);
         return input;
+    }
+
+    private static <T> void quickSort(ArrayList<T> list, int low, int high, Comparator<T> comparator) {
+        if (low < high) {
+            int pivot = partition(list, low, high, comparator);
+            quickSort(list, low, pivot - 1, comparator);
+            quickSort(list, pivot + 1, high, comparator);
+        }
+    }
+
+    // pivot = list[low]
+    // left = low+1, right = high
+    // move left while <= pivot, move right while > pivot
+    // swap left/right until crossed
+    // swap low/right at end
+    private static <T> int partition(ArrayList<T> list, int low, int high, Comparator<T> comparator) {
+        // Choose middle element as pivot
+        int mid = low + (high - low) / 2;
+        swap(list, low, mid); // move pivot to low
+
+        T pivotValue = list.get(low);
+        int left = low + 1;
+        int right = high;
+
+        while (true) {
+            while (left <= right && comparator.compare(list.get(left), pivotValue) <= 0) {
+                left++;
+            }
+
+            while (left <= right && comparator.compare(list.get(right), pivotValue) > 0) {
+                right--;
+            }
+
+            if (left > right) {
+                break;
+            }
+
+            swap(list, left, right);
+            left++;
+            right--;
+        }
+
+        swap(list, low, right);
+        return right;
+    }
+
+    private static <T> void swap(ArrayList<T> list, int i, int j) {
+        if (i == j) return;
+        T temp = list.get(i);
+        list.set(i, list.get(j));
+        list.set(j, temp);
     }
 
     //compare using the default Employee.compareTo
