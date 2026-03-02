@@ -55,10 +55,21 @@ public class Employee implements Comparable<Employee> {
         return grossPayAfterDeductions / hoursWorked;
     }
 
+    public static void saveToFile(ArrayList<Employee> employees, String filename) throws IOException {
+        try (var bw = new BufferedWriter(new FileWriter(filename))) {
+            for (Employee e : employees) {
+                bw.write(String.format("%d,%s,%f,%f,%f,%f,%f",
+                        e.getID(), e.getName(), e.getHoursWorked(), e.getHourlyRate(),
+                        e.getDeductionProvince(), e.getDeductionFederal(), e.getEducationAllowance()));
+                bw.newLine();
+            }
+        }
+    }
+
     //tostring override
     @Override
     public String toString() {
-        return String.format("ID: %d\nName: %s\nHours worked: %f\nHourly rate: %f\nDeduction province: %f\nDeduction federal: %f\nEducation allowance: %f",
+        return String.format("%d<>%s<>%f<>%f<>%f<>%f<>%f",
                 getID(), getName(), getHoursWorked(), getHourlyRate(), getDeductionProvince(), getDeductionFederal(), getEducationAllowance());
     }
 

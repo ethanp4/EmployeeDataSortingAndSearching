@@ -82,4 +82,38 @@ public class Utility {
         }
         return input;
     }
+
+    public static int binarySearch(ArrayList<Employee> array, String target, int low, int high) {
+
+        if (low > high) {
+            return -1; //This is when target is not found
+        }
+
+        //Calculate the middle index (Helps avoid integer overflow compared to (low + high) / 2)
+        int mid = low + (high - low) /2;
+
+        // Compare the target to the element at the midpoint
+        int comparisonResult = target.compareTo(array.get(mid).getName());
+
+        if (comparisonResult < 0 ) {
+            return binarySearch(array, target, low, mid - 1); //Target is before the midpoint alphabetically - searches in the left half
+
+        } else if (comparisonResult > 0) {
+            return binarySearch(array, target, mid + 1, high); //Target is after the midpoint alphabetically - searches in the right half}
+
+        } else {
+            //Match is found in in mid, but there couldb be a duplicate in the left half, so we check fot that too
+            int firstOccurence = mid;
+
+            //Search left of midpoint to find an earlier match (if there is one)
+            int earlierMatch = binarySearch(array, target, low, mid - 1);
+
+            //If an earlier match is found, we use that index instead
+            if (earlierMatch != -1) {
+                firstOccurence = earlierMatch;
+            }
+
+            return firstOccurence;
+        }
+    }
 }
